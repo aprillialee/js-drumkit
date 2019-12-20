@@ -77,6 +77,24 @@
   <audio data-key="76" src="sounds/kick2.wav"></audio>
 
   <script>
+    window.addEventListener('keydown', function (e) {
+      const audioElt = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+      const keyElt = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+
+      if (!audioElt) return;
+      audioElt.currentTime = 0;
+      audioElt.play();
+      keyElt.classList.add('playing');
+    });
+
+
+    function removeTransition(e) {
+      if (e.propertyName !== 'transform') return;
+      this.classList.remove('playing');
+    };
+
+    const keys = document.querySelectorAll('.key');
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
   </script>
 
 
